@@ -33,6 +33,15 @@ export const useAuthStore = defineStore("auth", {
             } catch (error) {
                 console.log(error.response)
             }
+        },
+        async logout() {
+            this.getToken()
+            try {
+                await axios.post('/logout')
+                this.router.push('/')
+            } catch (error) {
+                console.log(error.response)
+            }
         }
     }
 })
