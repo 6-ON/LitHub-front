@@ -12,12 +12,12 @@ const form = ref({
 </script>
 <template>
     <div class="w-full h-screen flex flex-col justify-center items-center font-mono">
-        <form @submit.prevent="">
+        <form @submit.prevent="authStore.login(form)">
             <RouterLink to="/">
                 <img src="@/assets/image/logo.png" class="h-24 mb-3">
             </RouterLink>
-            <input class="form-input" placeholder="email">
-            <input class="form-input" type="password" placeholder="password">
+            <input class="form-input" placeholder="email" v-model="form.email">
+            <input class="form-input" type="password" placeholder="password" v-model="form.password">
             <span class="text-gray-800 mt-3">
                 Unregistred ?
                 <RouterLink class="hover:underline text-slate-600" to="/register"> Register</RouterLink>
