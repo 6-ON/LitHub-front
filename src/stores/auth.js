@@ -14,7 +14,8 @@ export const useAuthStore = defineStore("auth", {
             await axios.get('/sanctum/csrf-cookie')
         },
         async getUser() {
-            this.getToken()
+            // this.getToken()
+            console.log(this.authUser);
             try {
                 const response = await axios.get('/api/user')
                 this.authUser = response.data
@@ -25,19 +26,47 @@ export const useAuthStore = defineStore("auth", {
         async login(data) {
             this.getToken()
             try {
-                await axios.post('/login',{
+                await axios.post('/login', {
                     email: data.email,
                     password: data.password
                 })
+                await this.getUser()
                 this.router.push('/')
             } catch (error) {
-                console.log(error.response)
+                console.log(error.data)
+            }
+        },
+        async register(data) {
+            this.getToken()
+            try {
+                await axios.post('/register', {
+                    username: data.username,
+                    email: data.email,
+                    password: data.password,
+                })
+                await this.getUser()
+                this.router.push('/')
+            } catch (error) {
+                console.log(error.data)
+            }
+        },
+        async updateProfile(data) {
+            try {
+                await axios.patch('/api/profile', data)
+                // update stored user values 
+                delete data.password
+                for (const key in data) {
+                    this.authUser[key] = data[key]
+                }
+            } catch (error) {
+                console.log(error.data)
             }
         },
         async logout() {
             this.getToken()
             try {
                 await axios.post('/logout')
+                this.authUser = null
                 this.router.push('/')
             } catch (error) {
                 console.log(error.response)
