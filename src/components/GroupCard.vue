@@ -1,18 +1,20 @@
 <script setup>
 import { joinGroup } from '@/api/groups'
-import { useRouter } from 'vue-router';
-const router = useRouter()
+import { ref } from 'vue';
+
 const props = defineProps({
     group: {
         type: Object,
         required: true
     }
 })
-
+const joining = ref(false)
+const emit = defineEmits(['join-success'])
 async function handleJoin() {
+    joining.value = true
     const joined = await joinGroup(props.group.id)
     if (joined) {
-        router.push(`/group/${props.group.id}`)
+        emit('join-success',props.group.id)
     }
 }
 </script>
@@ -33,7 +35,7 @@ async function handleJoin() {
             </router-link>
             <p class="text-gray-600">{{ group.description }}</p>
         </div>
-        <button @click="handleJoin" :class="{ 'btn-disabled': group.is_joined }" class="m-3  btn btn-accent ">{{
+        <button @click="handleJoin" :class="{ 'btn-disabled': group.is_joined || joining}" class="m-3  btn btn-accent ">{{
             group.is_joined ? 'joined' :
             'join' }}</button>
     </div>
