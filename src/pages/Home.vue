@@ -1,12 +1,6 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth'
 import { onMounted, ref } from 'vue';
-const authStore = useAuthStore()
-
-
-// onMounted(async () => {
-//     await authStore.getUser()
-// })
 </script>
 
 
