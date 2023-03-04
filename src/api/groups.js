@@ -29,6 +29,7 @@ async function sendGroupMessage(data) {
 
     }
 }
+
 async function joinGroup(id){
     try {
         const response = await axios.post(`/api/group/${id}/join`);
@@ -39,6 +40,20 @@ async function joinGroup(id){
 
     }
 }
+async function createGroup(data){
+    try {
+        const response = await axios.post('/api/group',{
+            title : data.title,
+            description : data.description,
+            image : data.image_url
+        });
+        return response.data;
+    } catch (error) {
+        console.log(error)
+        return false;
+
+    }
+}
 
 
-export { getGroups, getGroup,sendGroupMessage,joinGroup };
+export { getGroups, getGroup,sendGroupMessage,joinGroup,createGroup };
