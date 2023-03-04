@@ -7,13 +7,6 @@ import { uploadAsset } from '@/api/cloudinary'
 const authStore = useAuthStore()
 
 
-// const updates = computed(() => {
-//     return {
-//         email: authStore.user?.email,
-//         username: authStore.user?.username,
-//         password: ''
-//     }
-// })
 
 async function handleUpdate(name, value) {
     const data = {}
