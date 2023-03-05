@@ -26,14 +26,6 @@ onMounted(async () => {
     post.value = await getPost(route.params.id)
 })
 
-async function handleReactionChange(reaction){
-    // user reaction should be null ,equal or deffirent to reaction
-    if (post.value.user_reacion ===  reaction) {
-        // remove reaction
-    } else if(availableReactions.includes(reaction)) {
-        // create it or change it
-    }
-}
 </script>
 <template>
     <!-- Card-->
@@ -71,7 +63,9 @@ async function handleReactionChange(reaction){
         </div>
         <div class=" rounded-2xl bg-gray-50 shadow-md p-2">
             <div class="py-2">
-                <Reactions @reaction-changed="handleReactionChange"
+                <Reactions 
+                :post_id="post.id"
+                :reacted="post.user_reaction"
                 :count="post.reactions_count" 
                 :available-reactions="availableReactions"></Reactions>
             </div>

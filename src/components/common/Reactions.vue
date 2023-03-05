@@ -7,11 +7,18 @@ defineProps({
     },
     availableReactions: {
         type: Array
-    }
+    },
+    post_id:{
+        required: true,
+        type: Number
+    },
+    user_reaction:{
+        required: true,
+        type: String
+    },
 })
-const emit  = defineEmits(['reaction-changed'])
- function handleReaction(reaction) {
-    emit('reaction-changed',reaction)
+function handleReaction(reaction) {
+    
 }
 </script>
 <template>
