@@ -35,7 +35,7 @@ defineProps({
             <RouterLink :to="'/book/' + post.id" class="hover:underline">
                 {{ post.title }}
             </RouterLink>
-            <RouterLink :to="'/book/' + post.id" class="badge badge-primary">{{ post.category.label }}</RouterLink>
+            <RouterLink :to="'/book/' + post.id" class="badge badge-primary">{{ post.category?.label ?? 'uncategorized' }}</RouterLink>
         </h3>
         <p class="text-xl ml-5 mt-3">
             {{ post.description }}
