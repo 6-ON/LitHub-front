@@ -52,7 +52,7 @@ onMounted(async () => {
             <a class="" href="#">
                 <img class="rounded-lg max-h-[29rem]" :src="post.image" />
             </a>
-            <a class="btn m-3">Download Book</a>
+            <a :href="post.attachment" target="_blank" class="btn m-3">Download Book</a>
         </div>
         <div class="rounded-2xl bg-blue-500 p-4 mb-4 ">
             <h3 class="text-2xl font-semibold capitalize">description :</h3>
