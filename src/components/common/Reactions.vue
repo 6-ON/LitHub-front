@@ -9,6 +9,10 @@ defineProps({
         type: Array
     }
 })
+const emit  = defineEmits(['reaction-changed'])
+ function handleReaction(reaction) {
+    emit('reaction-changed',reaction)
+}
 </script>
 <template>
     <div class="dropdown dropdown-top dropdown-hover w-fit">
@@ -22,7 +26,7 @@ defineProps({
         </label>
         <div class="dropdown-content dropdown-top menu p-2 shadow bg-base-100 rounded-box">
             <ul tabindex="0" class="flex flex-row text-2xl">
-                <li v-for="reaction in availableReactions">
+                <li @click="handleReaction(reaction)" v-for="reaction in availableReactions">
                     <a>{{ reaction }}</a>
                 </li>
             </ul>
