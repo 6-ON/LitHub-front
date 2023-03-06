@@ -38,7 +38,7 @@ const createPost = async function (data) {
     }
 }
 const commentPost = async function (comment) {
-    console.log(comment);
+
     try {
         const response = await axios.post('/api/comment', {
             post_id: comment.post,
@@ -50,5 +50,39 @@ const commentPost = async function (comment) {
         return false
     }
 }
+const reactPost = async function (id, reaction) {
 
-export { getPosts, getPost, commentPost, createPost };
+    try {
+        const response = await axios.post(`/api/post/${id}/react`, {
+            emoji: reaction
+        })
+        return response.status === 201;
+    } catch (error) {
+        console.log(error.data)
+        return false
+    }
+}
+const updateReactPost = async function (id, reaction) {
+
+    try {
+        const response = await axios.patch(`/api/post/${id}/react`, {
+            emoji: reaction
+        })
+        return response.status === 202;
+    } catch (error) {
+        console.log(error.data)
+        return false
+    }
+}
+const removeReactPost = async function (id) {
+
+    try {
+        const response = await axios.delete(`/api/post/${id}/react`)
+        return response.data;
+    } catch (error) {
+        console.log(error.data)
+        return false
+    }
+}
+
+export { getPosts, getPost, commentPost, createPost, reactPost, updateReactPost, removeReactPost };
