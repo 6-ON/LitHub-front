@@ -1,6 +1,9 @@
 
 <script setup>
-defineProps({
+import { updateReactPost, reactPost, removeReactPost } from "@/api/posts";
+import { ref } from "vue";
+
+const props = defineProps({
     count: {
         required: true,
         type: Number
@@ -8,23 +11,47 @@ defineProps({
     availableReactions: {
         type: Array
     },
-    post_id:{
+    post_id: {
         required: true,
         type: Number
     },
-    user_reaction:{
+    user_reaction: {
         required: true,
-        type: String
+        default: null
     },
 })
-function handleReaction(reaction) {
-    
+const currentEmoji = ref(props.user_reaction?.emoji)
+
+async function handleReaction(reaction) {
+
+    if (currentEmoji.value) {
+        if (currentEmoji.value === reaction) {
+            const removeResults = await removeReactPost(props.post_id)
+            if (removeResults) {
+                currentEmoji.value = null
+            }
+        } else {
+            // update
+            const updateResults = await updateReactPost(props.post_id, reaction)
+            if (updateResults) {
+                currentEmoji.value = reaction
+            }
+        }
+    } else {
+        // create
+        const createResults = await reactPost(props.post_id, reaction)
+        if (createResults) {
+            currentEmoji.value = reaction
+        }
+    }
 }
 </script>
 <template>
     <div class="dropdown dropdown-top dropdown-hover w-fit">
         <label tabindex="0">
-            <svg class="w-8" fill="currentColor" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <p v-if="currentEmoji" class="text-2xl">{{ currentEmoji }}</p>
+            <svg v-else class="w-8" fill="currentColor" aria-hidden="true" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
                 <path clip-rule="evenodd"
                     d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-2.625 6c-.54 0-.828.419-.936.634a1.96 1.96 0 00-.189.866c0 .298.059.605.189.866.108.215.395.634.936.634.54 0 .828-.419.936-.634.13-.26.189-.568.189-.866 0-.298-.059-.605-.189-.866-.108-.215-.395-.634-.936-.634zm4.314.634c.108-.215.395-.634.936-.634.54 0 .828.419.936.634.13.26.189.568.189.866 0 .298-.059.605-.189.866-.108.215-.395.634-.936.634-.54 0-.828-.419-.936-.634a1.96 1.96 0 01-.189-.866c0-.298.059-.605.189-.866zm2.023 6.828a.75.75 0 10-1.06-1.06 3.75 3.75 0 01-5.304 0 .75.75 0 00-1.06 1.06 5.25 5.25 0 007.424 0z"
                     fill-rule="evenodd"></path>
