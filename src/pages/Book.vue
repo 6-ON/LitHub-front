@@ -65,7 +65,7 @@ onMounted(async () => {
             <div class="py-2">
                 <Reactions 
                 :post_id="post.id"
-                :reacted="post.user_reaction"
+                :user_reaction="post.user_reaction"
                 :count="post.reactions_count" 
                 :available-reactions="availableReactions"></Reactions>
             </div>
