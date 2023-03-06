@@ -35,7 +35,7 @@ async function handleCreate() {
     <div class="modal modal-bottom sm:modal-middle">
         <div class="modal-box scrollbar-none">
             <h2 class="text-center text-xl uppercase  font-semibold mb-2">create a group</h2>
-            <form @submit.prevent="handleCreate" class="flex flex-col gap-3 items-center">
+            <form id="create-group-form" @submit.prevent="handleCreate" class="flex flex-col gap-3 items-center">
 
                 <img :src="selectedImage" class="rounded-full bg-slate-400 w-32 h-32 object-cover">
                 <label for="create-group-image" class="btn">Select image</label>
@@ -52,6 +52,8 @@ async function handleCreate() {
 
             </form>
             <div class="modal-action">
+                <button type="submit" form="create-group-form" class="btn">Create</button>
+                
                 <label for="create-group-modal" class="btn">Close</label>
             </div>
         </div>
