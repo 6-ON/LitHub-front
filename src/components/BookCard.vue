@@ -35,13 +35,18 @@ defineProps({
             <RouterLink :to="'/book/' + post.id" class="hover:underline">
                 {{ post.title }}
             </RouterLink>
-            <RouterLink :to="'/book/' + post.id" class="badge badge-primary">{{ post.category?.label ?? 'uncategorized' }}</RouterLink>
+            <RouterLink :to="'/book/' + post.id" class="badge badge-primary">{{ post.category?.label ?? 'uncategorized' }}
+            </RouterLink>
         </h3>
         <p class="text-xl ml-5 mt-3">
             {{ post.description }}
         </p>
         <div class="flex mt-5 gap-3">
-            <Reactions :count="post.reactions_count" :available-reactions="availableReactions"></Reactions>
+            <Reactions
+            :post_id="post.id" 
+            :user_reaction="post.user_reaction"
+            :count="post.reactions_count"
+                :available-reactions="availableReactions"></Reactions>
 
             <div>
                 <svg class="w-8" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"
