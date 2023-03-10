@@ -19,6 +19,9 @@ const authStore = useAuthStore()
                 <RouterLink exact-active-class="text-sky-600" to="/books">Books</RouterLink>
             </li>
             <li>
+                <RouterLink exact-active-class="text-sky-600" to="/users">Users</RouterLink>
+            </li>
+            <li>
                 <RouterLink exact-active-class="text-sky-600" to="/groups">Groups</RouterLink>
             </li>
         </ul>

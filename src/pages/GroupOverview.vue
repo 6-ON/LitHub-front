@@ -1,13 +1,14 @@
 <script setup>
 
 import { ref } from 'vue';
-import { sendGroupMessage } from '@/api/groups';
+import { sendGroupMessage,deleteGroup } from '@/api/groups';
 import Member from '@/components/common/Member.vue';
 import Message from '@/components/common/Message.vue';
 import InputSend from '@/components/common/inputSend.vue';
-import { useRoute } from 'vue-router';
+import { useRoute,useRouter } from 'vue-router';
 
 const route = useRoute()
+const router = useRouter()
 
 const group = ref(route.params.group)
 
@@ -21,7 +22,12 @@ async function handleSend(data) {
         group.value.messages.push(sendingResponse);
     }
 }
-
+async function confirmDelete(){
+    const result = await deleteGroup(route.params.id)
+    if (result) {
+        router.push('/groups')
+    }
+}
 
 </script>
 
@@ -51,8 +57,23 @@ async function handleSend(data) {
             <h3 class="text-xl font-semibold mt-4 capitalize">description</h3>
             <p class="py-4">{{ group?.description }}</p>
             <div class="modal-action">
+                <label for="delete-confirmation-modal" class="btn btn-error">Remove</label>
                 <label for="group-info-modal" class="btn">Close</label>
             </div>
+        </div>
+    </div>
+
+
+    <input type="checkbox" id="delete-confirmation-modal" class="modal-toggle" />
+    <div class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box p-4">
+            <h2 class="text-3xl text-center mb-6">Confirmation</h2>
+            <h2 class="text-xl text-center p-2">Are you sure you want to delete your <strong>own group</strong> ?</h2>
+            <div class="modal-action">
+                <button @click="confirmDelete" for="delete-confirmation-modal" class="btn btn-error">Confirm</button>
+                <label for="delete-confirmation-modal" class="btn">cancel</label>
+            </div>
+
         </div>
     </div>
 

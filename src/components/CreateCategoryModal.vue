@@ -19,7 +19,8 @@ async function handleCreate() {
 <template>
     <input type="checkbox" id="create-category-modal" class="modal-toggle" />
     <div class="modal">
-        <div class="modal-box">
+        <div class="modal-box relative">
+            <label for="create-category-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
             <h3 class="font-bold text-center mb-5 text-xl">Create category</h3>
             <form class="flex items-center flex-col" @submit.prevent="handleCreate">
                 <label class="input-group input-group-vertical">
