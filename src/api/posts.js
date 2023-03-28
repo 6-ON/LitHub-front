@@ -11,6 +11,36 @@ const getPosts = async function () {
     }
 
 }
+export const getFavourites = async function () {
+    try {
+        const response = await axios.get('/api/favourites');
+        return response.data;
+    } catch (error) {
+        console.log(error.data)
+        return [];
+
+    }
+}
+export const favouritePost = async function (id) {
+
+    try {
+        const response = await axios.post(`/api/post/${id}/favourite`)
+        return response.status === 201;
+    } catch (error) {
+        console.log(error.data)
+        return false
+    }
+}
+
+export const unfavouritePost = async function (id) {
+        try {
+            const response = await axios.delete(`/api/post/${id}/favourite`)
+            return response.status === 204;
+        } catch (error) {
+            console.log(error.data)
+            return false
+        }
+}
 const getPost = async function (id) {
     try {
         const response = await axios.get(`/api/post/${id}`);
