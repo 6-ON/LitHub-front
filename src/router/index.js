@@ -9,6 +9,7 @@ import FavouritesVue from '@/pages/Favourites.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { getGroup } from '@/api/groups'
 import ProfileVue from '@/pages/Profile.vue'
+import UsersVue from '@/pages/Users.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -85,6 +86,16 @@ const router = createRouter({
       component: GroupsVue,
       meta: {
         title: 'Groups'
+      }
+
+    }
+    ,
+    {
+      path: '/users',
+      name: 'users',
+      component: UsersVue,
+      meta: {
+        title: 'Users'
       }
 
     }

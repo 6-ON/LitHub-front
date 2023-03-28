@@ -18,13 +18,16 @@ const selectedImage = computed(() => {
 function changeCreateImage(e) {
     group.value.image = e.target.files[0]
 }
+const submitting = ref(false)
 async function handleCreate() {
+    submitting.value = true
     console.log(group.value);
     const uploadResult = await uploadAsset(group.value.image)
     if (uploadResult) {
         group.value.image_url = uploadResult.secure_url
         const createResult = await createGroup(group.value)
         if (createResult) {
+            submitting.value = false
             router.push(`/group/${createResult.id}`)
         }
     }
@@ -33,7 +36,8 @@ async function handleCreate() {
 <template>
     <input type="checkbox" id="create-group-modal" class="modal-toggle" />
     <div class="modal modal-bottom sm:modal-middle">
-        <div class="modal-box scrollbar-none">
+        <div class="modal-box scrollbar-none relative">
+            <label for="create-group-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
             <h2 class="text-center text-xl uppercase  font-semibold mb-2">create a group</h2>
             <form id="create-group-form" @submit.prevent="handleCreate" class="flex flex-col gap-3 items-center">
 
@@ -52,9 +56,10 @@ async function handleCreate() {
 
             </form>
             <div class="modal-action">
-                <button type="submit" form="create-group-form" class="btn">Create</button>
-                
-                <label for="create-group-modal" class="btn">Close</label>
+                <button type="submit" :class="{ 'btn-disabled': submitting }" form="create-group-form"
+                    class="btn">Create</button>
+
+
             </div>
         </div>
     </div>

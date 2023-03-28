@@ -19,9 +19,19 @@ async function getGroup(id) {
 
     }
 }
+async function deleteGroup(id) {
+    try {
+        const response = await axios.delete(`/api/group/${id}`);
+        return response.status === 204;
+    } catch (error) {
+        console.log(error)
+        return false;
+
+    }
+}
 async function sendGroupMessage(data) {
     try {
-        const response = await axios.post('/api/message/',data);
+        const response = await axios.post('/api/message/', data);
         return response.data;
     } catch (error) {
         console.log(error)
@@ -30,7 +40,7 @@ async function sendGroupMessage(data) {
     }
 }
 
-async function joinGroup(id){
+async function joinGroup(id) {
     try {
         const response = await axios.post(`/api/group/${id}/join`);
         return response.status === 201;
@@ -40,12 +50,12 @@ async function joinGroup(id){
 
     }
 }
-async function createGroup(data){
+async function createGroup(data) {
     try {
-        const response = await axios.post('/api/group',{
-            title : data.title,
-            description : data.description,
-            image : data.image_url
+        const response = await axios.post('/api/group', {
+            title: data.title,
+            description: data.description,
+            image: data.image_url
         });
         return response.data;
     } catch (error) {
@@ -56,4 +66,11 @@ async function createGroup(data){
 }
 
 
-export { getGroups, getGroup,sendGroupMessage,joinGroup,createGroup };
+export {
+    getGroups,
+    getGroup,
+    sendGroupMessage,
+    joinGroup,
+    createGroup,
+    deleteGroup
+};

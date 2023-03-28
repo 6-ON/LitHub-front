@@ -17,6 +17,16 @@ export const useLibStore = defineStore("category", {
                 return []
 
             }
+        },
+        async getCategoryPosts(id) {
+            try {
+                const response = await axios.get(`/api/category/${id}`)
+                return response.data
+            } catch (error) {
+                console.log(error.response);
+                return false
+            }
+
         }
     }
 

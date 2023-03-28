@@ -48,8 +48,9 @@ async function handleCreate() {
 <template>
     <input type="checkbox" id="create-post-modal" class="modal-toggle" />
     <div class="modal modal-bottom sm:modal-middle">
-        <div class="modal-box scrollbar-none">
-            <h2 class="text-center text-xl uppercase  font-semibold mb-2">create a group</h2>
+        <div class="modal-box scrollbar-none relative">
+            <label for="create-post-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+            <h2 class="text-center text-xl uppercase  font-semibold mb-2">create a Post</h2>
             <form @submit.prevent="handleCreate" class="flex flex-col gap-3 items-center">
 
                 <img :src="selectedImage" class="rounded-full bg-slate-400 w-32 h-32 object-cover">
