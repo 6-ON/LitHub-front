@@ -57,6 +57,11 @@ onMounted(() => {
                             @{{ authStore.user.username }}
                         </li>
                         <li>
+                            <RouterLink to="/favourites" class="justify-between">
+                                favourites
+                            </RouterLink>
+                        </li>
+                        <li>
                             <RouterLink to="/profile" class="justify-between">
                                 profile
                             </RouterLink>
