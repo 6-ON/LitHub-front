@@ -108,7 +108,7 @@ const removeReactPost = async function (id) {
 
     try {
         const response = await axios.delete(`/api/post/${id}/react`)
-        return response.data;
+        return response.status === 204;
     } catch (error) {
         console.log(error.data)
         return false
