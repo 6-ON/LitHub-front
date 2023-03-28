@@ -1,7 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { getPosts } from '@/api/posts'
-import { getElapsedTime } from '@/helpers/date'
 import BookCard from '@/components/BookCard.vue';
 import CreatePostModal from '@/components/CreatePostModal.vue'
 import CreateCategoryModal from '@/components/CreateCategoryModal.vue'
