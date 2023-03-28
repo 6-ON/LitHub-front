@@ -5,6 +5,7 @@ import LoginVue from '@/pages/Login.vue'
 import RegisterVue from '@/pages/Register.vue'
 import BookVue from '@/pages/Book.vue'
 import groupVue from '@/pages/GroupOverview.vue'
+import FavouritesVue from '@/pages/Favourites.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { getGroup } from '@/api/groups'
 import ProfileVue from '@/pages/Profile.vue'
@@ -52,6 +53,16 @@ const router = createRouter({
       path: '/books',
       name: 'books',
       component: BooksVue,
+      meta: {
+        title: 'Books'
+      }
+
+    }
+    ,
+    {
+      path: '/favourites',
+      name: 'favourites',
+      component: FavouritesVue,
       meta: {
         title: 'Books'
       }
