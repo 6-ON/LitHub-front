@@ -1,5 +1,7 @@
 <script setup>
+import Favourite from './common/Favourite.vue'
 import { getElapsedTime } from '@/helpers/date';
+import { favouritePost,unfavouritePost } from '@/api/posts';
 import Reactions from '@/components/common/Reactions.vue'
 const availableReactions = ['👍', '❤️', '🤩', '👎'];
 
@@ -9,6 +11,22 @@ defineProps({
         type: Object
     }
 })
+const emit = defineEmits(['unfavourited']);
+async function favourite(post) {
+    //favourite post if not already favourited
+    if (!post.is_favourited) {
+        const response = await favouritePost(post.id);
+        if (response) {
+            post.is_favourited = true;
+        }
+    } else {
+        const response = await unfavouritePost(post.id);
+        if (response) {
+            post.is_favourited = false;
+            emit('unfavourited');
+        }
+    }
+}
 </script>
 <template>
     <article class="mb-4 p-6 rounded-xl bg-gray-50 hover:shadow-lg dark:bg-slate-800 flex flex-col">
@@ -41,22 +59,25 @@ defineProps({
         <p class="text-xl ml-5 mt-3">
             {{ post.description }}
         </p>
-        <div class="flex mt-5 gap-3">
-            <Reactions
-            :post_id="post.id" 
-            :user_reaction="post.user_reaction"
-            :count="post.reactions_count"
-                :available-reactions="availableReactions"></Reactions>
+        <div class="mt-5 flex justify-between">
+            <div class="flex gap-3">
+                <Reactions :post_id="post.id" :user_reaction="post.user_reaction" :count="post.reactions_count"
+                    :available-reactions="availableReactions"></Reactions>
 
-            <div>
-                <svg class="w-8" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path clip-rule="evenodd"
-                        d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
-                        fill-rule="evenodd"></path>
-                </svg>
-                <span class="badge">{{ post.comments_count }}</span>
+                <div>
+                    <svg class="w-8" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd"
+                            d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
+                            fill-rule="evenodd"></path>
+                    </svg>
+                    <span class="badge">{{ post.comments_count }}</span>
+                </div>
             </div>
+            <div class="flex gap-3">
+                <Favourite @changed="favourite(post)" :is-favourite="post.is_favourited" />
+            </div>
+
         </div>
     </article>
 </template>
